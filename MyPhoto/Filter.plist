@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>GPUImageVignetteFilter</string>
+	<string>GPUImageSharpenFilter</string>
+	<string>GPUImageSaturationFilter</string>
+	<string>GPUImageContrastFilter</string>
+	<string>GPUImageExposureFilter</string>
+	<string>GPUImageBrightnessFilter</string>
+	<string>GPUImageTransformFilter</string>
+	<string>GPUImageGaussianBlurFilter</string>
+	<string>GPUImageToonFilter</string>
+	<string>GPUImageSphereRefractionFilter</string>
+	<string>GPUImageCrosshatchFilter</string>
+	<string>GPUImageStretchDistortionFilter</string>
+	<string>GPUImageEmbossFilter</string>
+	<string>GPUImageGlassSphereFilter</string>
+	<string>GPUImageColorPackingFilter</string>
+	<string>GPUImageSepiaFilter</string>
+	<string>GPUImageColorInvertFilter</string>
+</array>
+</plist>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>晕影</string>
+	<string>锐化</string>
+	<string>饱和度</string>
+	<string>对比度</string>
+	<string>曝光</string>
+	<string>亮度</string>
+	<string>形变</string>
+	<string>高斯模糊</string>
+	<string>卡通</string>
+	<string>球形倒立</string>
+	<string>交叉线</string>
+	<string>哈哈镜</string>
+	<string>浮雕</string>
+	<string>水晶球</string>
+	<string>色彩丢失</string>
+	<string>灰色</string>
+	<string>反色</string>
+</array>
+</plist>
