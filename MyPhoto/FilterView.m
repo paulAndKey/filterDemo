@@ -116,8 +116,13 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     [_imageView removeFromSuperview];
+    [self updateImageFilter:_dataArray[indexPath.row]];
+
+}
+
+- (void)updateImageFilter:(NSString *)filterType {
     
-    Class someClass = NSClassFromString(_dataArray[indexPath.row]);
+    Class someClass = NSClassFromString(filterType);
     id obj = [[someClass alloc] init];
     //方向转为正常的
     [obj setInputRotation:kGPUImageRotateRight atIndex:0];
@@ -134,7 +139,6 @@
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_topView.frame), kScreenWidth, kScreenHeight - CGRectGetHeight(_topView.frame) - CGRectGetHeight(_bottomView.frame))];
     self.imageView.image = newImage;
     [self addSubview:self.imageView];
-    
     
     //****其中晕影、锐化、饱和度、对比度、曝光、亮度、形变、高斯模糊等都有一个属性可以设置，后面研究一下**** 更多效果请查看http://blog.csdn.net/gaojq_ios/article/details/46924491
 }
