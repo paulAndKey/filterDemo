@@ -9,14 +9,14 @@
 	<string>曝光</string>
 	<string>亮度</string>
 	<string>形变</string>
-	<string>高斯模糊</string>
+	<string>模糊</string>
 	<string>卡通</string>
-	<string>球形倒立</string>
+	<string>倒球形</string>
 	<string>交叉线</string>
 	<string>哈哈镜</string>
 	<string>浮雕</string>
 	<string>水晶球</string>
-	<string>色彩丢失</string>
+	<string>无色彩</string>
 	<string>灰色</string>
 	<string>反色</string>
 </array>

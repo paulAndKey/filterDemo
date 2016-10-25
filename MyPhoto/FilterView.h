@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface FilterView : UIView
 
 - (instancetype)initWithFrame:(CGRect)frame image:(UIImage *)image;
+
 
 @end

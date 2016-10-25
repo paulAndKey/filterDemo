@@ -33,6 +33,7 @@
 
 @property (nonatomic , strong) UIImage * filterImage;
 
+
 @end
 
 @implementation FilterView
@@ -115,33 +116,111 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    [_imageView removeFromSuperview];
-    [self updateImageFilter:_dataArray[indexPath.row]];
-
+     [_imageView removeFromSuperview];
+    Class someClass = NSClassFromString(_dataArray[indexPath.row]);
+    id obj = [[someClass alloc] init];
+    if ([_dataArray[indexPath.row] isEqualToString:@"GPUImageVignetteFilter"]) {
+        //晕影
+        GPUImageVignetteFilter * filter = [[GPUImageVignetteFilter alloc] init];
+        //中心
+        filter.vignetteCenter = CGPointMake(0.5, 0.5);
+        //渐变开始和终结距离的比例
+        filter.vignetteStart = 0.5;
+        filter.vignetteEnd = 0.2;
+        obj = filter;
+    }
+    if ([_dataArray[indexPath.row] isEqualToString:@"GPUImageGaussianBlurFilter"]) {
+        //高斯模糊
+        GPUImageGaussianBlurFilter * blurFilter = [[GPUImageGaussianBlurFilter alloc] init];
+        //模糊程度
+        blurFilter.blurRadiusInPixels = 25.0;
+        obj = blurFilter;
+    }
+    if ([_dataArray[indexPath.row] isEqualToString:@"GPUImageSharpenFilter"]) {
+        //锐化
+        GPUImageSharpenFilter * sharpenFilter = [[GPUImageSharpenFilter alloc] init];
+        //锐化的程度 -4---4  0是正常水平
+        sharpenFilter.sharpness = 3;
+        obj = sharpenFilter;
+    }
+    if ([_dataArray[indexPath.row] isEqualToString:@"GPUImageSaturationFilter"]) {
+        //饱和度
+        GPUImageSaturationFilter * saturationFilter = [[GPUImageSaturationFilter alloc] init];
+        //饱和数值  0.0~2.0  1是正常水平值
+        saturationFilter.saturation = 0;
+        obj = saturationFilter;
+    }
+    if ([_dataArray[indexPath.row] isEqualToString:@"GPUImageContrastFilter"]) {
+        //对比度
+        GPUImageContrastFilter * contrastFilter = [[GPUImageContrastFilter alloc] init];
+        //对比数值  0.0~4.0  1.0 as normal level
+        contrastFilter.contrast = 3;
+        obj = contrastFilter;
+    }
+    if ([_dataArray[indexPath.row] isEqualToString:@"GPUImageExposureFilter"]) {
+        //曝光
+        GPUImageExposureFilter * exposureFilter = [[GPUImageExposureFilter alloc] init];
+        //曝光值 from -10.0 to 10.0, with 0.0 as the normal level
+        exposureFilter.exposure = 3.0;
+        obj = exposureFilter;
+    }
+    if ([_dataArray[indexPath.row] isEqualToString:@"GPUImageBrightnessFilter"]) {
+        //亮度
+        GPUImageBrightnessFilter * brightnessFilter = [[GPUImageBrightnessFilter alloc] init];
+        //Brightness ranges from -1.0 to 1.0, with 0.0 as the normal level
+        brightnessFilter.brightness = 0.3;
+        obj = brightnessFilter;
+    }
+    if ([_dataArray[indexPath.row] isEqualToString:@"GPUImageTransformFilter"]) {
+        //形变
+        GPUImageTransformFilter * transFormFilter = [[GPUImageTransformFilter alloc] init];
+        transFormFilter.ignoreAspectRatio = YES;
+        obj = transFormFilter;
+    }
+    [self updateImageFilter:obj index:indexPath.row];
 }
 
-- (void)updateImageFilter:(NSString *)filterType {
+- (void)updateImageFilter:(id)filterType index:(NSInteger)index{
     
-    Class someClass = NSClassFromString(filterType);
-    id obj = [[someClass alloc] init];
     //方向转为正常的
-    [obj setInputRotation:kGPUImageRotateRight atIndex:0];
+    [filterType setInputRotation:kGPUImageRotateRight atIndex:0];
     
-    [obj forceProcessingAtSize:self.originalImage.size];
-    [obj useNextFrameForImageCapture];
+    [filterType forceProcessingAtSize:self.originalImage.size];
+    [filterType useNextFrameForImageCapture];
     
     GPUImagePicture * stillImageSource = [[GPUImagePicture alloc]initWithImage:self.originalImage];
-    [stillImageSource addTarget:obj];
+    [stillImageSource addTarget:filterType];
     
     [stillImageSource processImage];
     
-    UIImage * newImage = [obj imageFromCurrentFramebuffer];
+    UIImage * newImage = [filterType imageFromCurrentFramebuffer];
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_topView.frame), kScreenWidth, kScreenHeight - CGRectGetHeight(_topView.frame) - CGRectGetHeight(_bottomView.frame))];
     self.imageView.image = newImage;
+    self.imageView.userInteractionEnabled = YES;
     [self addSubview:self.imageView];
-    
+
     //****其中晕影、锐化、饱和度、对比度、曝光、亮度、形变、高斯模糊等都有一个属性可以设置，后面研究一下**** 更多效果请查看http://blog.csdn.net/gaojq_ios/article/details/46924491
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 - (void)saveButtonClick {
     NSLog(@"保存");
